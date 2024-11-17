@@ -2,45 +2,19 @@
 
 # CISA M365 Security Configuration Baseline for Defender
 
-Microsoft 365 (M365) Defender is a cloud-based enterprise defense suite that
-coordinates prevention, detection, investigation, and response. This set
-of tools and features are used to detect many types of attacks.
+Microsoft 365 (M365) Defender is a cloud-based enterprise defense suite that coordinates prevention, detection, investigation, and response. This set of tools and features are used to detect many types of attacks.
 
-This baseline focuses on the features of Defender for Office 365, but
-some settings are actually configured in the Microsoft Purview
-compliance portal. However, for simplicity, both the
-M365 Defender and Microsoft Purview compliance portal
-items are contained in this baseline.
+This baseline focuses on the features of Defender for Office 365, but some settings are actually configured in the Microsoft Purview compliance portal. However, for simplicity, both the M365 Defender and Microsoft Purview compliance portal items are contained in this baseline.
 
-Generally, use of Microsoft Defender is not required by the baselines of
-the core M365 products (Exchange Online, Teams, etc.). This baseline serves as
-a guide should an agency elect to use Defender as their tool of choice. Please
-note that some of the controls in the core baselines require the use of a
-dedicated security tool, such as Defender.
+Generally, use of Microsoft Defender is not required by the baselines of the core M365 products (Exchange Online, Teams, etc.). Should an agency elect to use Defender as their tool of choice, agencies should apply these baseline settings. Please note that some of the controls in the core baselines require the use of a dedicated security tool that provides comparable protection as Defender.   In addition to applying these controls, agencies should consider using a cloud access security broker to secure their environments as they adopt zero trust principles.
 
-In addition to these controls, agencies should consider using a cloud
-access security broker to secure their environments as they adopt zero
-trust principles.
+The Secure Cloud Business Applications (SCuBA) project, run by the Cybersecurity and Infrastructure Security Agency (CISA), provides guidance and capabilities to secure federal civilian executive branch (FCEB) agencies’ cloud business application environments and protect federal information that is created, accessed, shared, and stored in those environments.
 
-The Secure Cloud Business Applications (SCuBA) project run by the Cybersecurity
-and Infrastructure Security Agency (CISA) provides guidance and capabilities to
-secure federal civilian executive branch (FCEB) agencies' cloud business
-application environments and protect federal information that is created,
-accessed, shared, and stored in those environments.
+The CISA SCuBA SCBs for M365 help secure federal information assets stored within M365 cloud business application environments through consistent, effective, and manageable security configurations. CISA created baselines tailored to the federal government’s threats and risk tolerance with the knowledge that every organization has different threat models and risk tolerance. While use of these baselines will be mandatory for civilian Federal Government agencies, organizations outside of the Federal Government may also find these baselines to be useful references to help reduce risks.
 
-The CISA SCuBA SCBs for M365 help secure federal information assets stored within
-M365 cloud business application environments through consistent, effective, and
-manageable security configurations. CISA created baselines tailored to the federal
-government's threats and risk tolerance with the knowledge that every organization
-has different threat models and risk tolerance. Non-governmental organizations may
-also find value in applying these baselines to reduce risks.
+For non-Federal users, the information in this document is being provided “as is” for INFORMATIONAL PURPOSES ONLY. CISA does not endorse any commercial product or service, including any subjects of analysis. Any reference to specific commercial entities or commercial products, processes, or services by service mark, trademark, manufacturer, or otherwise, does not constitute or imply endorsement, recommendation, or favoritism by CISA. Without limiting the generality of the foregoing, some controls and settings are not available in all products; CISA has no control over vendor changes to products offerings or features.  Accordingly, these SCuBA SCBs for M365 may not be applicable to the products available to you. This document does not address, ensure compliance with, or supersede any law, regulation, or other authority. Entities are responsible for complying with any recordkeeping, privacy, and other laws that may apply to the use of technology. This document is not intended to, and does not, create any right or benefit for anyone against the United States, its departments, agencies, or entities, its officers, employees, or agents, or any other person.
 
-The information in this document is provided “as is” for INFORMATIONAL PURPOSES
-ONLY. CISA does not endorse any commercial product or service, including any
-subjects of analysis. Any reference to specific commercial entities or commercial
-products, processes, or services by service mark, trademark, manufacturer, or
-otherwise does not constitute or imply endorsement, recommendation, or favoritism
-by CISA. This document does not address, ensure compliance with, or supersede any law, regulation, or other authority. Entities are responsible for complying with any recordkeeping, privacy, and other laws that may apply to the use of technology. This document is not intended to, and does not, create any right or benefit for anyone against the United States, its departments, agencies, or entities, its officers, employees, or agents, or any other person.
+
 
 > This document is marked TLP:CLEAR. Recipients may share this information without restriction. Information is subject to standard copyright rules. For more information on the Traffic Light Protocol, see https://www.cisa.gov/tlp.
 
@@ -86,7 +60,7 @@ The standard and strict preset security policies SHALL be enabled.
 
 
 #### MS.DEFENDER.1.2v1
-All users SHALL be added to Exchange Online Protection in either the standard or strict preset security policy.
+All users SHALL be added to Exchange Online Protection (EOP) in either the standard or strict preset security policy.
 
 <!--Policy: MS.DEFENDER.1.2v1; Criticality: SHALL -->
 - _Rationale:_ Important user protections are provided by EOP, including anti-spam, anti-malware, and anti-phishing protections. By using the preset policies, administrators can help ensure all new and existing users have secure defaults applied automatically.
@@ -158,7 +132,7 @@ Sensitive accounts SHALL be added to Defender for Office 365 protection in the s
 
 ### License Requirements
 
-- Defender for Office 365 capabilities require Defender for Office 365 Plan 1 or 2. These are included with E5 and G5 and are available as add-ons for E3 and G3.
+- Defender for Office 365 capabilities require Defender for Office 365 Plan 1 or 2. These are included with E5 and G5 and are available as add-ons for E3 and G3. However, third-party solutions can be used to meet this requirement. If a third-party solution is used, then a Defender for Office 365 Plan 1 or 2, E5, and G5 license is not required for the respective policies.
 
 ### Implementation
 
@@ -455,7 +429,7 @@ The custom policy SHOULD be applied to Exchange, OneDrive, SharePoint, Teams cha
   - [T1567: Exfiltration Over Web Service](https://attack.mitre.org/techniques/T1567/)
   - [T1530: Data from Cloud Storage](https://attack.mitre.org/techniques/T1530/)
   - [T1213: Data from Information Repositories](https://attack.mitre.org/techniques/T1213/)
-    - [T1213.002: Sharepoint](https://attack.mitre.org/techniques/T1213.002/)
+    - [T1213.002: Sharepoint](https://attack.mitre.org/techniques/T1213/002/)
 
 #### MS.DEFENDER.4.3v1
 The action for the custom policy SHOULD be set to block sharing sensitive information with everyone.
@@ -483,7 +457,8 @@ Notifications to inform users and help educate them on the proper use of sensiti
 - _Last modified:_ June 2023
 - _Note:_ The custom policy referenced here is the same policy
           configured in [MS.DEFENDER.4.1v1](#msdefender41v1).
-
+- _MITRE ATT&CK TTP Mapping:_
+  - None
 
 #### MS.DEFENDER.4.5v1
 A list of apps that are restricted from accessing files protected by DLP policy SHOULD be defined.
@@ -545,13 +520,15 @@ information by restricted apps and unwanted Bluetooth applications.
 
 - DLP for Teams requires an E5 or G5 license. See [Microsoft Purview Data Loss Prevention: Data Loss Prevention for Teams \| Microsoft
   Learn](https://learn.microsoft.com/en-us/office365/servicedescriptions/microsoft-365-service-descriptions/microsoft-365-tenantlevel-services-licensing-guidance/microsoft-365-security-compliance-licensing-guidance#microsoft-purview-data-loss-prevention-data-loss-prevention-dlp-for-teams)
-  for more information.
+  for more information. However, this requirement can also be met through a third-party solution. If a third-party solution is used, then a E5 or G5 license is not required for the respective policies.
+
 
 - DLP for Endpoint requires an E5 or G5 license. See [Get started with
   Endpoint data loss prevention - Microsoft Purview (compliance) \|
   Microsoft
   Learn](https://learn.microsoft.com/en-us/purview/endpoint-dlp-getting-started?view=o365-worldwide)
-  for more information.
+  for more information. However, this requirement can also be met through a third-party solution. If a third-party solution is used, then a E5 or G5 license is not required for the respective policies.
+
 
 ### Implementation
 
@@ -718,10 +695,10 @@ At a minimum, the alerts required by the CISA M365 Security Configuration Baseli
     - [T1562.006: Indicator Blocking](https://attack.mitre.org/techniques/T1562/006/)
 
 #### MS.DEFENDER.5.2v1
-The alerts SHOULD be sent to a monitored address or incorporated into a SIEM.
+The alerts SHOULD be sent to a monitored address or incorporated into a Security Information and Event Management (SIEM).
 
 <!--Policy: MS.DEFENDER.5.2v1; Criticality: SHOULD -->
-- _Rationale:_ Suspicious or malicious events, if not resolved promptly, may have a greater impact to users and the agency. Sending alerts to a monitored email address or Security Information and Event Management (SIEM) system helps ensure events are acted upon in a timely manner to limit overall impact.
+- _Rationale:_ Suspicious or malicious events, if not resolved promptly, may have a greater impact to users and the agency. Sending alerts to a monitored email address or SIEM system helps ensure events are acted upon in a timely manner to limit overall impact.
 - _Last modified:_ June 2023
 - _MITRE ATT&CK TTP Mapping:_
   - [T1562: Impair Defenses](https://attack.mitre.org/techniques/T1562/)
@@ -828,7 +805,7 @@ Microsoft Purview Audit (Standard) logging SHALL be enabled.
 Microsoft Purview Audit (Premium) logging SHALL be enabled for ALL users.
 
 <!--Policy: MS.DEFENDER.6.2v1; Criticality: SHALL -->
-- _Rationale:_ Standard logging may not include relevant details necessary for visibility into user actions during an incident. Enabling Microsoft Purview Audit (Premium) captures additional event types not included with Standard. Furthermore, it is required for government agencies by OMB M-21-13 (referred to therein as by its former name, Unified Audit Logs w/Advanced Features).
+- _Rationale:_ Standard logging may not include relevant details necessary for visibility into user actions during an incident. Enabling Microsoft Purview Audit (Premium) captures additional event types not included with Standard. Furthermore, it is required for government agencies by OMB M-21-31 (referred to therein as by its former name, Unified Audit Logs w/Advanced Features).
 - _Last modified:_ June 2023
 - _Note:_ At the time of this writing, Microsoft has announced upcoming changes
           to its Purview Audit service that include making audit events
@@ -876,6 +853,11 @@ Related to Cybersecurity Incidents \| Office of Management and
 - [Expanding cloud logging to give customers deeper security visibility \|
   Microsoft Security Blog](https://www.microsoft.com/en-us/security/blog/2023/07/19/expanding-cloud-logging-to-give-customers-deeper-security-visibility/)
 
+- [Export, configure, and view audit log records | Microsoft Learn](https://learn.microsoft.com/en-us/purview/audit-log-export-records)
+
+- [Untitled Goose Tool Fact Sheet | CISA.](https://www.cisa.gov/resources-tools/resources/untitled-goose-tool-fact-sheet)
+
+- [Manage audit log retention policies | Microsoft Learn](https://learn.microsoft.com/en-us/purview/audit-log-retention-policies?tabs=microsoft-purview-portal#before-you-create-an-audit-log-retention-policy)
 
 ### License Requirements
 
@@ -885,8 +867,7 @@ Related to Cybersecurity Incidents \| Office of Management and
 
 - Additionally, maintaining logs in the M365 environment for longer than
   one year requires an add-on license. For more information, see
-  [Licensing requirements \| Microsoft
-  Learn](https://learn.microsoft.com/en-us/purview/audit-solutions-overview?view=o365-worldwide#licensing-requirements).
+  [Manage audit log retention policies | Microsoft Learn](https://learn.microsoft.com/en-us/purview/audit-log-retention-policies?tabs=microsoft-purview-portal#before-you-create-an-audit-log-retention-policy). However, this requirement can also be met by exporting the logs from M365 and storing them with your solution of choice, in which case audit log retention policies are not necessary.
 
 ### Implementation
 
@@ -910,7 +891,8 @@ Learn.](https://learn.microsoft.com/en-us/purview/audit-premium-setup?view=o365-
 
 #### MS.DEFENDER.6.3v1 Instructions
 To create one or more custom audit retention policies, if the default retention policy is not sufficient for agency needs, follow [Create an audit log retention policy](https://learn.microsoft.com/en-us/purview/audit-log-retention-policies?view=o365-worldwide#create-an-audit-log-retention-policy) instructions.
-Ensure the duration selected in the retention policies is at least one year,
-in accordance with OMB M-21-31.
+Ensure the duration selected in the retention policies is at least one year, in accordance with OMB M-21-31. 
+
+As noted in the [License Requirements](https://github.com/cisagov/ScubaGear/baselines/defender.md#license-requirements-1) section above, the creation of a custom audit log retention policy and its retention in the M365 environment requires E5/G5 licenses or E3/G3 licenses with add-on compliance licenses. No additional license is required to view and export logs. To view and export audit logs follow [Export, configure, and view audit log records | Microsoft Learn](https://learn.microsoft.com/en-us/purview/audit-log-export-records) and/or [Untitled Goose Tool Fact Sheet | CISA.](https://www.cisa.gov/resources-tools/resources/untitled-goose-tool-fact-sheet)
 
 **`TLP:CLEAR`**

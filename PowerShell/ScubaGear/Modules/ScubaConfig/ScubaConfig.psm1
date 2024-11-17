@@ -1,19 +1,19 @@
 class ScubaConfig {
     <#
     .SYNOPSIS
-      This class stores Scuba config data loaded from a file.
+    This class stores Scuba config data loaded from a file.
     .DESCRIPTION
-      This class is designed to function as a singleton. The singleton instance
-      is cached on the ScubaConfig type itself. In the context of tests, it may be
-      important to call `.ResetInstance` before and after tests as needed to
-      ensure any preexisting configs are not inadvertantly used for the test,
-      or left in place after the test is finished. The singleton will persist
-      for the life of the powershell session unless the ScubaConfig module is
-      removed. Note that `.LoadConfig` internally calls `.ResetInstance` to avoid
-      issues.
+    This class is designed to function as a singleton. The singleton instance
+    is cached on the ScubaConfig type itself. In the context of tests, it may be
+    important to call `.ResetInstance` before and after tests as needed to
+    ensure any preexisting configs are not inadvertantly used for the test,
+    or left in place after the test is finished. The singleton will persist
+    for the life of the powershell session unless the ScubaConfig module is
+    removed. Note that `.LoadConfig` internally calls `.ResetInstance` to avoid
+    issues.
     .EXAMPLE
-      $Config = [ScubaConfig]::GetInstance()
-      [ScubaConfig]::LoadConfig($SomePath)
+    $Config = [ScubaConfig]::GetInstance()
+    [ScubaConfig]::LoadConfig($SomePath)
     #>
     hidden static [ScubaConfig]$_Instance = [ScubaConfig]::new()
     hidden static [Boolean]$_IsLoaded = $false
@@ -29,6 +29,8 @@ class ScubaConfig {
         DefaultOutRegoFileName = "TestResults"
         DefaultOutReportName = "BaselineReports"
         DefaultOutJsonFileName = "ScubaResults"
+        DefaultOutCsvFileName = "ScubaResults"
+        DefaultOutActionPlanFileName = "ActionPlan"
         DefaultPrivilegedRoles = @(
             "Global Administrator",
             "Privileged Role Administrator",
@@ -38,7 +40,7 @@ class ScubaConfig {
             "Hybrid Identity Administrator",
             "Application Administrator",
             "Cloud Application Administrator")
-        DefaultOPAVersion = '0.66.0'
+        DefaultOPAVersion = '0.69.0'
     }
 
     static [object]ScubaDefault ([string]$Name){
@@ -144,6 +146,14 @@ class ScubaConfig {
 
         if (-Not $this.Configuration.OutJsonFileName){
             $this.Configuration.OutJsonFileName = [ScubaConfig]::ScubaDefault('DefaultOutJsonFileName')
+        }
+
+        if (-Not $this.Configuration.OutCsvFileName){
+            $this.Configuration.OutCsvFileName = [ScubaConfig]::ScubaDefault('DefaultOutCsvFileName')
+        }
+
+        if (-Not $this.Configuration.OutActionPlanFileName){
+            $this.Configuration.OutActionPlanFileName = [ScubaConfig]::ScubaDefault('DefaultOutActionPlanFileName')
         }
 
         return

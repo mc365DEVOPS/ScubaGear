@@ -160,9 +160,9 @@ The list of acceptable values are:
 | Government cloud tenants (high) | gcchigh    |
 | Department of Defense tenants   | dod        |
 
-## MergeJson
+## KeepIndividualJSON
 
-**MergeJson** combines the individual JSON files (named `TeamsReport.json`) in the `IndividualReports` folder together with the `ProviderSettingsExport.json` into an uber JSON file named `ScubaResults.json`. The individual JSON files are deleted.
+**KeepIndividualJSON** Keeps the individual JSON files (e.g., `TeamsReport.json`) in the `IndividualReports` folder along with `ProviderSettingsExport.json` without combining the results in to one uber JSON file named the `ScubaResults.json`. The parameter is for backwards compatibility with older versions of ScubaGear.
 
 | Parameter   | Value  |
 |-------------|--------|
@@ -172,21 +172,21 @@ The list of acceptable values are:
 | Config File | No     |  
 
 ```powershell
-# Create a merged JSON file
+# Outputs legacy ScubaGear individual JSON output 
 Invoke-SCuBA -ProductNames teams `
-  -MergeJson
+  -KeepIndividualJSON
 ```
 
 ## OPAPath
 
 **OPAPath** is the location of the folder that contains the Open Policy Agent (OPA) policy engine executable file. The executable must be named `opa_windows_amd64.exe`. For most cases, this parameter should not be used.
 
-| Parameter   | Value                                  |
-|-------------|----------------------------------------|
-| Optional    | Yes                                    |
-| Datatype    | String                                 |
+| Parameter   | Value                               |
+|-------------|-------------------------------------|
+| Optional    | Yes                                 |
+| Datatype    | String                              |
 | Default     | `C:\Users\johndoe\.scubagear\Tools` |
-| Config File | Yes                                    |
+| Config File | Yes                                 |
 
 ```powershell
 # Change the directory that contains the OPA exe
@@ -219,6 +219,42 @@ Invoke-SCuBA -ProductNames teams `
 
 > **Note**: AppID, CertificateThumbprint, and Organization are part of a parameter set used for authentication; if one is specified, all three must be specified.  
 
+## OutActionPlanFileName
+
+**OutActionPlanFileName** renames the file for the action plan template for the test results. This should only be the base file name, as the extension `.csv` will automatically be added.
+
+| Parameter   | Value        |
+|-------------|--------------|
+| Optional    | Yes          |
+| Datatype    | String       |
+| Default     | `ActionPlan` |
+| Config File | Yes          |  
+
+
+```powershell
+# Change the output action plan file
+Invoke-SCuBA -ProductNames teams `
+  -OutActionPlanFileName myplan
+```
+
+## OutCsvFileName
+
+**OutCsvFileName** renames the file for the CSV version of the test results. This should only be the base file name, as the extension `.csv` will automatically be added.
+
+| Parameter   | Value          |
+|-------------|----------------|
+| Optional    | Yes            |
+| Datatype    | String         |
+| Default     | `ScubaResults` |
+| Config File | Yes            |  
+
+
+```powershell
+# Change the output CSV file
+Invoke-SCuBA -ProductNames teams `
+  -OutCsvFileName myresults
+```
+
 ## OutFolderName
 
 **OutFolderName** is the first half of the name of the folder where the [report files](../execution/reports.md) will be created. The second half is a timedate stamp. The location of this folder is determined by the [OutPath](#outpath) parameter. 
@@ -238,22 +274,21 @@ Invoke-SCuBA -ProductNames teams `
 
 ## OutJsonFileName
 
-**OutJsonFileName** renames the uber JSON file that is created if the [MergeJson](#mergejson) parameter is used. This should only be the base file name, as the extension `.json` will automatically be added. 
+**OutJsonFileName** renames the uber output JSON file that is created after a ScubaGear run. This should only be the base file name, as the extension `.json` will automatically be added. 
 
-| Parameter   | Value              |
-|-------------|--------------------|
-| Optional    | Yes                |
-| Datatype    | String             |
-| Default     | `ScubaResults.json` |
-| Config File | No                 |  
+| Parameter   | Value          |
+|-------------|----------------|
+| Optional    | Yes            |
+| Datatype    | String         |
+| Default     | `ScubaResults` |
+| Config File | Yes            |  
 
-> **Note**: This parameter does not work if the `-MergeJson` parameter is not present.
+> **Note**: This parameter does not work if the `-KeepIndividualJSON` parameter is present.
 
 ```powershell
 # Change the output JSON file
 Invoke-SCuBA -ProductNames teams `
-  -OutJsonFileName myresults `
-  -MergeJson
+  -OutJsonFileName myresults
 ```
 
 ## OutPath
@@ -296,7 +331,7 @@ Invoke-SCuBA -ProductNames teams `
 
 ## OutRegoFileName
 
-**OutRegoFileName** is the name of the test results file in JSON and CSV that are created in the output folder.
+**OutRegoFileName** is the name of the JSON test results file that is created in the output folder, containing the raw Rego output.
 
 | Parameter   | Value         |
 |-------------|---------------|
@@ -311,7 +346,7 @@ Invoke-SCuBA -ProductNames teams `
   -OutRegoFileName mytestresults
 ```
 
-> **Note**: ScubaGear will automatically add the `.csv` and the `.json` respectively to these filenames.
+> **Note**: ScubaGear will automatically add the the `.json` to this filename.
 
 ## OutReportName
 

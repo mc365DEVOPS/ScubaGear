@@ -8,7 +8,18 @@ If ScubaGear was installed by [downloading from GitHub](../installation/github.m
 
 ```powershell
 # Import the module into the session
-Import-Module -Name .\PowerShell\ScubaGear 
+Import-Module .\PowerShell\ScubaGear 
+```
+
+> **Note**: Do not add a \ to the end of the `.\PowerShell\ScubaGear` path.
+
+## Install Dependencies
+
+ScubaGear requires a number of dependencies to be installed before it can be invoked.  To install the dependencies:
+
+```powershell
+# Install the minimum required dependencies
+Initialize-SCuBA 
 ```
 
 ## Interactive Mode

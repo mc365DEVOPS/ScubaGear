@@ -4,11 +4,11 @@
 
 Microsoft Entra ID is a cloud-based identity and access control service that provides security and functional capabilities. This Secure Configuration Baseline (SCB) provides specific policies to help secure Microsoft Entra ID.
 
-The Secure Cloud Business Applications (SCuBA) project run by the Cybersecurity and Infrastructure Security Agency (CISA) provides guidance and capabilities to secure federal civilian executive branch (FCEB) agencies’ cloud business application environments and protect federal information that is created, accessed, shared, and stored in those environments.
+The Secure Cloud Business Applications (SCuBA) project, run by the Cybersecurity and Infrastructure Security Agency (CISA), provides guidance and capabilities to secure federal civilian executive branch (FCEB) agencies’ cloud business application environments and protect federal information that is created, accessed, shared, and stored in those environments.
 
-The CISA SCuBA SCBs for M365 help secure federal information assets stored within M365 cloud business application environments through consistent, effective, and manageable security configurations. CISA created baselines tailored to the federal government’s threats and risk tolerance with the knowledge that every organization has different threat models and risk tolerance. Non-governmental organizations may also find value in applying these baselines to reduce risks.
+The CISA SCuBA SCBs for M365 help secure federal information assets stored within M365 cloud business application environments through consistent, effective, and manageable security configurations. CISA created baselines tailored to the federal government’s threats and risk tolerance with the knowledge that every organization has different threat models and risk tolerance. While use of these baselines will be mandatory for civilian Federal Government agencies, organizations outside of the Federal Government may also find these baselines to be useful references to help reduce risks.
 
-The information in this document is being provided “as is” for INFORMATIONAL PURPOSES ONLY. CISA does not endorse any commercial product or service, including any subjects of analysis. Any reference to specific commercial entities or commercial products, processes, or services by service mark, trademark, manufacturer, or otherwise, does not constitute or imply endorsement, recommendation, or favoritism by CISA. This document does not address, ensure compliance with, or supersede any law, regulation, or other authority. Entities are responsible for complying with any recordkeeping, privacy, and other laws that may apply to the use of technology. This document is not intended to, and does not, create any right or benefit for anyone against the United States, its departments, agencies, or entities, its officers, employees, or agents, or any other person.
+For non-Federal users, the information in this document is being provided “as is” for INFORMATIONAL PURPOSES ONLY. CISA does not endorse any commercial product or service, including any subjects of analysis. Any reference to specific commercial entities or commercial products, processes, or services by service mark, trademark, manufacturer, or otherwise, does not constitute or imply endorsement, recommendation, or favoritism by CISA. Without limiting the generality of the foregoing, some controls and settings are not available in all products; CISA has no control over vendor changes to products offerings or features.  Accordingly, these SCuBA SCBs for M365 may not be applicable to the products available to you. This document does not address, ensure compliance with, or supersede any law, regulation, or other authority. Entities are responsible for complying with any recordkeeping, privacy, and other laws that may apply to the use of technology. This document is not intended to, and does not, create any right or benefit for anyone against the United States, its departments, agencies, or entities, its officers, employees, or agents, or any other person.
 
 > This document is marked TLP:CLEAR. Recipients may share this information without restriction. Information is subject to standard copyright rules. For more information on the Traffic Light Protocol, see https://www.cisa.gov/tlp.
 
@@ -72,7 +72,7 @@ Legacy authentication SHALL be blocked.
     - [T1110.002: Password Cracking](https://attack.mitre.org/techniques/T1110/002/)
     - [T1110.003: Password Spraying](https://attack.mitre.org/techniques/T1110/003/)
   - [T1078: Valid Accounts](https://attack.mitre.org/techniques/T1078/)
-    - [T1078.004: Cloud Accounts](https://attack.mitre.org/techniques/T078/004/)
+    - [T1078.004: Cloud Accounts](https://attack.mitre.org/techniques/T1078/004/)
 
 ### Resources
 
@@ -88,9 +88,19 @@ Legacy authentication SHALL be blocked.
 
 #### MS.AAD.1.1v1 Instructions
 
-- [Determine if an agency’s existing applications use legacy authentication](https://learn.microsoft.com/en-us/entra/identity/conditional-access/block-legacy-authentication#identify-legacy-authentication-use) before blocking legacy authentication across the entire application base.
+1. [Determine if an agency’s existing applications use legacy authentication](https://learn.microsoft.com/en-us/entra/identity/conditional-access/block-legacy-authentication#identify-legacy-authentication-use) before blocking legacy authentication across the entire application base.
 
-- Create a [Conditional Access policy to block legacy authentication](https://learn.microsoft.com/en-us/entra/identity/conditional-access/howto-conditional-access-policy-block-legacy).
+2. Create a Conditional Access policy to block legacy authentication
+
+<pre>
+  Users > Include > <b>All users</b>
+
+  Target resources > Cloud apps >  Include > <b>All cloud apps</b>
+
+  Conditions > Client apps > Configure > <b>Yes</b> > Legacy authentication clients > Select only <b>Exchange ActiveSync clients</b> and <b>Other clients</b>
+
+  Access controls > Grant > <b>Block Access</b>
+</pre>
 
 ## 2. Risk Based Policies
 
@@ -110,7 +120,7 @@ Users detected as high risk SHALL be blocked.
 - _Note:_ Users identified as high risk by Microsoft Entra ID Identity Protection can be blocked from accessing the system via a Microsoft Entra ID Conditional Access policy. A high-risk user will be blocked until an administrator remediates their account.
 - _MITRE ATT&CK TTP Mapping:_
   - [T1078: Valid Accounts](https://attack.mitre.org/techniques/T1078/)
-    - [T1078.004: Cloud Accounts](https://attack.mitre.org/techniques/T078/004/)
+    - [T1078.004: Cloud Accounts](https://attack.mitre.org/techniques/T1078/004/)
 
 #### MS.AAD.2.2v1
 A notification SHOULD be sent to the administrator when high-risk users are detected.
@@ -120,7 +130,7 @@ A notification SHOULD be sent to the administrator when high-risk users are dete
 - _Last modified:_ June 2023
 - _MITRE ATT&CK TTP Mapping:_
   - [T1078: Valid Accounts](https://attack.mitre.org/techniques/T1078/)
-    - [T1078.004: Cloud Accounts](https://attack.mitre.org/techniques/T078/004/)
+    - [T1078.004: Cloud Accounts](https://attack.mitre.org/techniques/T1078/004/)
 
 #### MS.AAD.2.3v1
 Sign-ins detected as high risk SHALL be blocked.
@@ -130,7 +140,7 @@ Sign-ins detected as high risk SHALL be blocked.
 - _Last modified:_ June 2023
 - _MITRE ATT&CK TTP Mapping:_
   - [T1078: Valid Accounts](https://attack.mitre.org/techniques/T1078/)
-    - [T1078.004: Cloud Accounts](https://attack.mitre.org/techniques/T078/004/)
+    - [T1078.004: Cloud Accounts](https://attack.mitre.org/techniques/T1078/004/)
 
 ### Resources
 
@@ -237,6 +247,8 @@ The Authentication Methods Manage Migration feature SHALL be set to Migration Co
 <!--Policy: MS.AAD.3.4v1; Criticality: SHALL -->
 - _Rationale:_ To disable the legacy authentication methods screen for the tenant, configure the Manage Migration feature to Migration Complete. The MFA and Self-Service Password Reset (SSPR) authentication methods are both managed from a central admin page, thereby reducing administrative complexity and potential security misconfigurations.
 - _Last modified:_ June 2023
+- _MITRE ATT&CK TTP Mapping:_
+  - None
 
 #### MS.AAD.3.5v1
 The authentication methods SMS, Voice Call, and Email One-Time Passcode (OTP) SHALL be disabled.
@@ -262,7 +274,7 @@ Phishing-resistant MFA SHALL be required for highly privileged roles.
     - [T1566.001: Spearphishing Attachment](https://attack.mitre.org/techniques/T1566/001/)
     - [T1566.002: Spearphishing Link](https://attack.mitre.org/techniques/T1566/002/)
   - [T1078: Valid Accounts](https://attack.mitre.org/techniques/T1078/)
-    - [T1078.004: Cloud Accounts](https://attack.mitre.org/techniques/T078/004/)
+    - [T1078.004: Cloud Accounts](https://attack.mitre.org/techniques/T1078/004/)
 
 #### MS.AAD.3.7v1
 Managed devices SHOULD be required for authentication.
@@ -272,7 +284,7 @@ Managed devices SHOULD be required for authentication.
 - _Last modified:_ June 2023
 - _MITRE ATT&CK TTP Mapping:_
   - [T1078: Valid Accounts](https://attack.mitre.org/techniques/T1078/)
-    - [T1078.004: Cloud Accounts](https://attack.mitre.org/techniques/T078/004/)
+    - [T1078.004: Cloud Accounts](https://attack.mitre.org/techniques/T1078/004/)
 
 #### MS.AAD.3.8v1
 Managed Devices SHOULD be required to register MFA.
@@ -282,7 +294,7 @@ Managed Devices SHOULD be required to register MFA.
 - _Last modified:_ June 2023
 - _MITRE ATT&CK TTP Mapping:_
   - [T1078: Valid Accounts](https://attack.mitre.org/techniques/T1078/)
-    - [T1078.004: Cloud Accounts](https://attack.mitre.org/techniques/T078/004/)
+    - [T1078.004: Cloud Accounts](https://attack.mitre.org/techniques/T1078/004/)
   - [T1098: Account Manipulation](https://attack.mitre.org/techniques/T1098/)
     - [T1098.005: Device Registration](https://attack.mitre.org/techniques/T1098/005/)
 
@@ -538,6 +550,8 @@ User passwords SHALL NOT expire.
 <!--Policy: MS.AAD.6.1v1; Criticality: SHALL -->
 - _Rationale:_ The National Institute of Standards and Technology (NIST), OMB, and Microsoft have published guidance indicating mandated periodic password changes make user accounts less secure. For example, OMB-22-09 states, "Password policies must not require use of special characters or regular rotation."
 - _Last modified:_ June 2023
+- _MITRE ATT&CK TTP Mapping:_
+  - None
 
 ### Resources
 
@@ -679,8 +693,7 @@ User activation of other highly privileged roles SHOULD trigger an alert.
 
 ### License Requirements
 
-- Microsoft Entra ID PIM requires a Microsoft Entra ID P2 license.
-
+- Policies [MS.AAD.7.4v1](https://github.com/cisagov/ScubaGear/blob/main/PowerShell/ScubaGear/baselines/aad.md#msaad74v1), [MS.AAD.7.5v1](https://github.com/cisagov/ScubaGear/blob/main/PowerShell/ScubaGear/baselines/aad.md#msaad75v1), [MS.AAD.7.6v1](https://github.com/cisagov/ScubaGear/blob/main/PowerShell/ScubaGear/baselines/aad.md#msaad76v1), [MS.AAD.7.7v1](https://github.com/cisagov/ScubaGear/blob/main/PowerShell/ScubaGear/baselines/aad.md#msaad77v1), [MS.AAD.7.8v1](https://github.com/cisagov/ScubaGear/blob/main/PowerShell/ScubaGear/baselines/aad.md#msaad78v1), and [MS.AAD.7.9v1](https://github.com/cisagov/ScubaGear/blob/main/PowerShell/ScubaGear/baselines/aad.md#msaad79v1) require a Microsoft Entra ID P2 license; however, a third-party Privileged Access Management (PAM) solution may also be used to satisfy the requirements. If a third-party solution is used, then a P2 license is not required for the respective policies.
 ### Implementation
 
 The following implementation instructions that reference the Microsoft Entra ID PIM service will vary if using a third-party PAM system instead. 

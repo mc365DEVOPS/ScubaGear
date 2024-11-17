@@ -51,11 +51,11 @@ Describe "Smoke Test: Generate Output" {
     Context "Invoke Scuba for $Organization" {
         BeforeAll {
             if ($PSCmdlet.ParameterSetName -eq 'Manual'){
-                { Invoke-SCuBA -ProductNames "*" -M365Environment $M365Environment -Quiet} |
+                { Invoke-SCuBA -ProductNames "*" -M365Environment $M365Environment -Quiet -KeepIndividualJSON} |
                 Should -Not -Throw
             }
             else {
-                { Invoke-SCuBA -CertificateThumbprint $Thumbprint -AppID $AppId -Organization $Organization -ProductNames "*" -M365Environment $M365Environment -Quiet} |
+                { Invoke-SCuBA -CertificateThumbprint $Thumbprint -AppID $AppId -Organization $Organization -ProductNames "*" -M365Environment $M365Environment -Quiet -KeepIndividualJSON} |
                 Should -Not -Throw
             }
             $ReportFolders = Get-ChildItem . -directory -Filter "M365BaselineConformance*" | Sort-Object -Property LastWriteTime -Descending
@@ -66,7 +66,6 @@ Describe "Smoke Test: Generate Output" {
         It "Item, <Item>, exists" -ForEach @(
             @{Item = 'BaselineReports.html'; ItemType = 'Leaf'},
             @{Item = 'TestResults.json'; ItemType = 'Leaf'},
-            @{Item = 'TestResults.csv'; ItemType = 'Leaf'},
             @{Item = 'ProviderSettingsExport.json'; ItemType = 'Leaf'},
             @{Item = 'IndividualReports'; ItemType = 'Container'},
             @{Item = 'IndividualReports/AADReport.html'; ItemType = 'Leaf'},
